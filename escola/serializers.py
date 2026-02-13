@@ -6,6 +6,36 @@ class EstudanteSerializer(serializers.ModelSerializer):
         model = Estudante
         fields = ['id', 'nome', 'email', 'cpf', 'data_nascimento', 'celular']
 
+    def validate(self, dados):
+        if 'cpf' in dados:
+            cpf = dados['cpf']
+            if len(cpf) != 11:
+                raise serializers.ValidationError({'cpf':'O CPF deve conter exatamente 11 caracteres.'})
+        if 'nome' in dados:
+            nome = dados['nome']
+            if not nome.isalpha():
+                raise serializers.ValidationError({'nome':'O nome deve conter somente letras.'})
+        if 'celular' in dados:
+            celular = dados['celular']
+            if len(celular) != 13:
+                raise serializers.ValidationError({'celular':'O número de celular deve conter exatamente 13 caracteres.'})
+        return dados
+
+    def validate_cpf(self, cpf):
+        if len(cpf) != 11:
+            raise serializers.ValidationError("O CPF deve conter exatamente 11 caracteres.")
+        return cpf
+    
+    def validate_nome(self, nome):
+        if not nome.isalpha():
+            raise serializers.ValidationError("O nome deve conter somente letras.")
+        return nome
+    
+    def validate_celular(self, celular):
+        if len(celular) != 13:
+            raise serializers.ValidationError("O número de celular deve conter exatamente 13 caracteres.")
+        return celular
+
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
