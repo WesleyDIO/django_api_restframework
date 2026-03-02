@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from escola.views import EstudanteViewSet, CursoViewSet, MatriculaViewSet, ListaMatriculaEstudante
 from rest_framework import routers
+from django.urls import reverse
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
